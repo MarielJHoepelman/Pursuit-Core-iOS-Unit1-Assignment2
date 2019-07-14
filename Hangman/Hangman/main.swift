@@ -81,24 +81,22 @@ func gameLoop() -> Void {
         
         // checks if character input matches any character in word, if its a match, assings that value to the guess array in the position of the match.
         for (i, c) in selectedWordArray.enumerated() {
-            if String(c) == String(characterInput) {
+            if String(c).lowercased() == String(characterInput).lowercased() {
                 guessedWordArray[i] = c
                 correctAttempt = true //use correct attempt to determine whether the attempt was a match and control the wrong attempt var.
                 guesses+=1
             }
         }
-        //if input is not correct, adds 1 ro arong attemps counter.
+        //if input is not correct, adds 1 to wrong attemps counter.
         if !correctAttempt {
             wrongAttempts += 1
-           
+
             let attempts = availableAttempts - wrongAttempts
-            
-            printHangman(number: wrongAttempts)
-            
             if attempts > 0 {
                 print("Oops, try again! You have \(attempts) chances left!")
                 guesses+=1
             }
+            printHangman(number: wrongAttempts)
         }
         
         //resets value of correct attempt to false.
@@ -130,7 +128,7 @@ func main() {
         print("Do you want to play again? y/n")
         
         let answer = getInput()! // gets input from user whether wants to play or not.
-        if answer == "n" { //if answer is no game doesnt re start.
+        if answer.lowercased() == "n" { //if answer is no, game doesn't restart.
             wantsToPlay = false
             print("Thank you for playing Hangman. Bye bye!")
         }
